@@ -31,11 +31,13 @@ angular.module('app.routes', [])
     .state('add_course', {
       url: '/add_course',
       templateUrl: 'templates/add_course.html',
+      controller: 'add_courseCtrl'
     })
 
     .state('add_module', {
       url: '/add_module',
       templateUrl: 'templates/add_module.html',
+      controller: 'add_moduleCtrl'
     })
 
     .state('home', {

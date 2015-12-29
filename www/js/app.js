@@ -5,6 +5,7 @@ angular.module('app',
   'app.services',
   'app.directives',
   'validation.match',
+  'ionic-datepicker',
   'ng-mfb'])
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {

@@ -1,4 +1,56 @@
 <ion-view title="Add Module">
   <ion-content padding="true" class="has-header">
+    <form class="list" ng-submit="doSignup()" name="signupForm">
+      <div class="item item-divider">
+        Details
+      </div>
+      <label class="item item-input item-stacked-label">
+        <span class="input-label">Module code</span>
+        <input type="text" ng-model="course.code" required>
+      </label>
+      <label class="item item-input item-stacked-label">
+        <span class="input-label">Module name</span>
+        <input type="text" placeholder="Exp: Introduction to Computer" ng-model="course.name" required>
+      </label>
+      <label class="item item-input item-stacked-label">
+        <span class="input-label">Course pre-requisite</span>
+        <input type="text" placeholder="Exp: Computing Essential" ng-model="course.name" required>
+      </label>
+      <label class="item item-input item-stacked-label">
+        <span class="input-label">Lecturer</span>
+        <input type="text" placeholder="Name" ng-model="course.name" required>
+      </label>
+      <div class="item item-divider">
+        Availability
+      </div>
+      <label class="item item-input">
+        <div class="input-label">
+          Start date
+        </div>
+        <ionic-datepicker input-obj="datepickerObject">
+          <button class="button button-block button-balanced"> {{datepickerObject.inputDate | date:'dd - MMMM - yyyy'}}</button>
+        </ionic-datepicker>
+      </label>
+      <label class="item item-input">
+        <div class="input-label">
+          End date
+        </div>
+        <ionic-datepicker input-obj="datepickerObject">
+          <button class="button button-block button-assertive"> {{datepickerObject.inputDate | date:'dd - MMMM - yyyy'}}</button>
+        </ionic-datepicker>
+      </label>
+      <ion-list>
+        <ion-checkbox>Mon</ion-checkbox>
+        <ion-checkbox>Tue</ion-checkbox>
+        <ion-checkbox>Wed</ion-checkbox>
+        <ion-checkbox>Thu</ion-checkbox>
+        <ion-checkbox>Fri</ion-checkbox>
+        <ion-checkbox>Sat</ion-checkbox>
+      </ion-list>
+
+
+      <div class="spacer" style="width: 300px; height: 1dw0px;"></div>
+      <button type="submit" class="button button-positive button-block button-full">Add module</button>
+    </form>
   </ion-content>
 </ion-view>
