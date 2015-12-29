@@ -1,0 +1,51 @@
+<ion-view title="Admin Panel">
+  <ion-nav-buttons side="right">
+    <button class="button button-icon" ng-click="openPopover($event)">
+      <i class="icon ion-more"></i>
+    </button>
+  </ion-nav-buttons>
+  <ion-content padding="true" class="has-header">
+    <h2>Courses</h2>
+    <ion-list>
+      <ion-item>Item 1</ion-item>
+      <ion-item>Item 2</ion-item>
+      <ion-item>Item 3</ion-item>
+      <ion-item>Item 1</ion-item>
+      <ion-item>Item 2</ion-item>
+      <ion-item>Item 3</ion-item>
+      <ion-item>Item 1</ion-item>
+      <ion-item>Item 2</ion-item>
+      <ion-item>Item 3</ion-item>
+      <ion-item>Item 1</ion-item>
+      <ion-item>Item 2</ion-item>
+      <ion-item>Item 3</ion-item>
+      <ion-item>Item 1</ion-item>
+      <ion-item>Item 2</ion-item>
+      <ion-item>Item 3</ion-item>
+      <ion-item>Item 1</ion-item>
+      <ion-item>Item 2</ion-item>
+      <ion-item>Item 3</ion-item>
+    </ion-list>
+  </ion-content>
+  <nav mfb-menu position="br" effect="zoomin" active-icon="ion-plus-round" resting-icon="ion-plus-round" toggling-method="click">
+    <button mfb-button icon="fa fa-graduation-cap" label="Add Course"></button>
+    <button mfb-button icon="fa fa-book" label="Add  Module"></button>
+  </nav>
+</ion-view>
+
+<script id="admin-menu.html" type="text/ng-template">
+  <ion-popover-view style="height:100px;">
+    <ion-header-bar>
+      <h1 class="title">Menu</h1>
+    </ion-header-bar>
+    <ion-content>
+    <ul class="list">
+      <li class="item">
+        <a class="item-icon-left" ng-click="logout()">
+          <i class="icon ion-log-out"></i> Logout
+        </a>
+      </li>
+    </ul>
+    </ion-content>
+  </ion-popover-view>
+</script>
