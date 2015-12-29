@@ -60,4 +60,8 @@ angular.module('app.controllers', ['app.login', 'app.signup'])
       $state.go('login');
       $scope.closePopover();
     };
+
+    $scope.goto = function(page) {
+      $state.go(page);
+    };
 })

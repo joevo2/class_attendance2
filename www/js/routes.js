@@ -28,6 +28,16 @@ angular.module('app.routes', [])
       controller: 'adminCtrl'
     })
 
+    .state('add_course', {
+      url: '/add_course',
+      templateUrl: 'templates/add_course.html',
+    })
+
+    .state('add_module', {
+      url: '/add_module',
+      templateUrl: 'templates/add_module.html',
+    })
+
     .state('home', {
       url: '/home',
       templateUrl: 'templates/home.html',

@@ -1,0 +1,43 @@
+<ion-view title="Add Course">
+  <ion-content padding="true" class="has-header">
+    <form class="list" ng-submit="doSignup()" name="signupForm">
+      <label class="item item-input item-stacked-label">
+        <span class="input-label">First Name</span>
+        <input type="text" placeholder="Exp: Bob" ng-model="signup.firstName" required>
+      </label>
+      <label class="item item-input item-stacked-label">
+        <span class="input-label">Last Name</span>
+        <input type="text" placeholder="Exp: Jacob" ng-model="signup.lastName" required>
+      </label>
+      <label class="item item-input item-stacked-label">
+        <span class="input-label">Email</span>
+        <input type="email" placeholder="test@test.com" ng-model="signup.email" required>
+      </label>
+      <label class="item item-input item-stacked-label">
+        <span class="input-label">Password</span>
+        <input type="password" placeholder="6 character and above" ng-model="signup.password" required ng-minlength="6" ng-maxlength="12" name="passwordField">
+<!--         <div ng-message="signupForm.passwordField.$error" ng-if="signupForm.passwordField.$dirty">
+          <div ng-message="minlength">Message must be over 6 characters</div>
+          <div ng-message="maxlength">Message must not exceed 12 characters</div>
+        </div> -->
+      </label>
+      <label class="item item-input item-stacked-label">
+        <span class="input-label">Confirm password</span>
+        <input type="password" placeholder="Retype your password" ng-model="signup.confirmPassword" match="signup.password" name="confirmField" required>
+        <div style="color: red" ng-show="signupForm.confirmField.$error.match">Password do not match</div>
+      </label>
+      <label class="item item-input item-select">
+        <div class="input-label">
+          Account type
+        </div>
+        <select ng-model="signup.accountType">
+          <option>Student</option>
+          <option>Lecturer</option>
+          <option>Admin</option>
+        </select>
+      </label>
+      <div class="spacer" style="width: 300px; height: 1dw0px;"></div>
+      <button type="submit" class="button button-positive button-block button-full">Create account</button>
+    </form>
+  </ion-content>
+</ion-view>
