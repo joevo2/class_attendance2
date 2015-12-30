@@ -1,10 +1,10 @@
 <ion-view title="Add course">
   <ion-content padding="true" class="has-header">
-    <form class="list" ng-submit="addCourse()">
+    <form class="list">
       <div class="item item-divider">
         Details
       </div>
-      <label class="item item-input item-stacked-label">
+      <label class="item item-input">
         <span class="input-label">Course code</span>
         <input type="text" ng-model="course.code" placeholder="Exp: CS001" required>
       </label>
@@ -17,13 +17,13 @@
       </div>
       <label class="item item-input">
         <span class="input-label">Years</span>
-        <input type="number" ng-model="course.durationYear" required>
+        <input type="number" ng-model="course.year" required>
       </label>
       <label class="item item-input">
         <span class="input-label">Months</span>
-        <input type="number" ng-model="course.durationMonth" required>
+        <input type="number" ng-model="course.month" required>
       </label>
-      <button type="submit" class="button button-positive button-block button-full">Add course</button>
+      <button type="submit" class="button button-positive button-block button-full" ng-click="addCourse()">Add course</button>
     </form>
   </ion-content>
 </ion-view>

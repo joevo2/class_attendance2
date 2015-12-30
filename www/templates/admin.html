@@ -13,13 +13,16 @@
     <div class="item item-divider">
       Courses
     </div>
-    <ion-list ng-repeat="course in courses">
-      <ion-item class="text-wrap">{{course.name}}</ion-item>
+    <ion-list>
+      <a class="item" ng-repeat="course in courses">{{course.name}}</a>
     </ion-list>
     <br>
     <div class="item item-divider">
       Module
     </div>
+    <ion-list>
+      <a class="item" ng-repeat="module in modules">{{module.name}}</a>
+    </ion-list>
   </ion-content>
   <nav mfb-menu position="br" effect="zoomin" active-icon="ion-plus-round" resting-icon="ion-plus-round" toggling-method="hover">
     <button mfb-button icon="fa fa-user" label="Add account" ng-click="goto('signup')"></button>

@@ -50,6 +50,12 @@ angular.module('app.routes', [])
       controller: 'homeCtrl'
     })
 
+    .state('register_module', {
+      url: '/register_module',
+      templateUrl: 'templates/register_module.html',
+      controller: 'register_moduleCtrl'
+    })
+
     .state('class', {
       url: '/class',
       templateUrl: 'templates/class.html',
