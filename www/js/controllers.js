@@ -66,12 +66,32 @@ angular.module('app.controllers', ['app.login', 'app.signup'])
     };
 })
 
-.controller('add_courseCtrl', function($scope) {
+.controller('add_courseCtrl', function($scope, $ionicHistory) {
+    $scope.course = {};
+    $scope.addCourse = function() {
+      console.log($scope.course);
+      var Courses = Parse.Object.extend("Courses");
+      var courses = new Courses();
 
+      courses.save({
+        code: $scope.course.code,
+        name: $scope.course.name,
+        duration: $scope.course.durationYear+"Y"+$scope.course.durationMonth+"M"
+      }, {
+        success: function(courses) {
+          console.log("Saved");
+        },
+        error: function(courses, error) {
+          console.log("Failed " + error.message);
+        }
+      });
+      $ionicHistory.goBack();
+    };
+    console.log($ionicHistory.currentView());
 })
 
 .controller('add_moduleCtrl', function($scope) {
-    $scope.course = {
+    $scope.module = {
       code: 'MOD',
     };
 
