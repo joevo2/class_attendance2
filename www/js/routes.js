@@ -6,6 +6,10 @@ angular.module('app.routes', [])
   var path = '/login';
   if (Parse.User.current()) {
     path = '/home';
+    var user = Parse.User.current();
+    if (user.get("accountType") == "Admin") {
+      path = '/admin'
+    }
   }
 
   $stateProvider

@@ -64,20 +64,21 @@ angular.module('app.controllers', ['app.login', 'app.signup'])
     $scope.goto = function(page) {
       $state.go(page);
     };
-
+    $scope.courses = [];
     var Courses = Parse.Object.extend("Courses");
     var query = new Parse.Query(Courses);
     query.find({
       success: function(results) {
-        alert("Successfully retrieved " + results.length + " scores.");
-        // Do something with the returned Parse.Object values
         for (var i = 0; i < results.length; i++) {
           var object = results[i];
-          alert(object.id + ' - ' + object.get('playerName'));
+          $scope.courses[i] = {
+            name: object.get('name'),
+          }
+          console.log(results[i].get('name'));
         }
       },
       error: function(error) {
-        alert("Error: " + error.code + " " + error.message);
+        console.log("Error: " + error.code + " " + error.message);
       }
     });
 })
@@ -143,4 +144,28 @@ angular.module('app.controllers', ['app.login', 'app.signup'])
       console.log('Selected date is : ', val)
     }
   };
+
+  // Ionic time Picker
+  $scope.timePickerObject = {
+    inputEpochTime: ((new Date()).getHours() * 60 * 60),  //Optional
+    step: 15,  //Optional
+    format: 12,  //Optional
+    titleLabel: '12-hour Format',  //Optional
+    setLabel: 'Set',  //Optional
+    closeLabel: 'Close',  //Optional
+    setButtonType: 'button-positive',  //Optional
+    closeButtonType: 'button-stable',  //Optional
+    callback: function (val) {    //Mandatory
+      timePickerCallback(val);
+    }
+  };
+
+  function timePickerCallback(val) {
+    if (typeof (val) === 'undefined') {
+      console.log('Time not selected');
+    } else {
+      var selectedTime = new Date(val * 1000);
+      console.log('Selected epoch is : ', val, 'and the time is ', selectedTime.getUTCHours(), ':', selectedTime.getUTCMinutes(), 'in UTC');
+    }
+  }
 })

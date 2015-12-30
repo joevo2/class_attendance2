@@ -49,9 +49,14 @@
       </ion-list>
       <div class="row">
         <div class="col col-33"><ion-checkbox>Mon</ion-checkbox></div>
-        <div class="col col-33"><ion-checkbox>Mon</ion-checkbox></div>
-        <div class="col col-33"><ion-checkbox>Mon</ion-checkbox></div>
+        <div class="col col-33"></div>
+        <div class="col col-33"></div>
       </div>
+      <ionic-timepicker input-obj="timePickerObject">
+        <button class="button button-block button-positive overflowShow">
+          <standard-time-meridian etime='timePickerObject.inputEpochTime'></standard-time-meridian>
+        </button>
+      </ionic-timepicker>
 
       <div class="spacer" style="width: 300px; height: 1dw0px;"></div>
       <button type="submit" class="button button-positive button-block button-full">Add module</button>
