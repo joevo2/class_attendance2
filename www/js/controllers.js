@@ -64,6 +64,22 @@ angular.module('app.controllers', ['app.login', 'app.signup'])
     $scope.goto = function(page) {
       $state.go(page);
     };
+
+    var Courses = Parse.Object.extend("Courses");
+    var query = new Parse.Query(Courses);
+    query.find({
+      success: function(results) {
+        alert("Successfully retrieved " + results.length + " scores.");
+        // Do something with the returned Parse.Object values
+        for (var i = 0; i < results.length; i++) {
+          var object = results[i];
+          alert(object.id + ' - ' + object.get('playerName'));
+        }
+      },
+      error: function(error) {
+        alert("Error: " + error.code + " " + error.message);
+      }
+    });
 })
 
 .controller('add_courseCtrl', function($scope, $ionicHistory) {
@@ -87,13 +103,10 @@ angular.module('app.controllers', ['app.login', 'app.signup'])
       });
       $ionicHistory.goBack();
     };
-    console.log($ionicHistory.currentView());
 })
 
 .controller('add_moduleCtrl', function($scope) {
-    $scope.module = {
-      code: 'MOD',
-    };
+    $scope.module = {};
 
 
   // Ionic Date Picker

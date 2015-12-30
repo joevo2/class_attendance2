@@ -5,6 +5,10 @@
     </button>
   </ion-nav-buttons>
   <ion-content padding="true" class="has-header">
+    <ti-segmented-control on-select="buttonClicked($index)" style="width: 200px; margin: auto;">
+        <ti-segmented-control-button class="button-positive" title="'Lecturer'" selected></ti-segmented-control-button>
+        <ti-segmented-control-button class="button-positive" title="'Student'" ></ti-segmented-control-button>
+    </ti-segmented-control>
     <h2>Courses</h2>
     <ion-list>
       <ion-item>Item 1</ion-item>

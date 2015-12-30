@@ -6,6 +6,7 @@ angular.module('app',
   'app.directives',
   'validation.match',
   'ionic-datepicker',
+  'ti-segmented-control',
   'ng-mfb'])
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
