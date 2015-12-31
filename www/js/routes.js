@@ -8,7 +8,7 @@ angular.module('app.routes', [])
       path = '/home';
       var user = Parse.User.current();
       if (user.get("accountType") == "Admin") {
-        path = '/admin'
+        path = '/admin';
       }
     }
 
@@ -59,6 +59,12 @@ angular.module('app.routes', [])
     .state('class', {
       url: '/class',
       templateUrl: 'templates/class.html',
+      controller: 'classCtrl'
+    })
+
+    .state('class_lecturer', {
+      url: '/class_lecturer',
+      templateUrl: 'templates/class_lecturer.html',
       controller: 'classCtrl'
     });
 

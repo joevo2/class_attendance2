@@ -9,15 +9,10 @@
       Today
     </div>
     <ion-list>
-      <ion-item class="item-text-wrap" href="#/class">
-        <h4>MOD002663</h4>
-        <h2>Mobile Technology</h2>
-        <p>9:00am - 11:00am</p>
-      </ion-item>
-      <ion-item class="item-text-wrap" href="#/class">
-        <h4>MOD002691</h4>
-        <h2>Undergraduate Major Project</h2>
-        <p>11:00am - 2:00pm</p>
+      <ion-item class="item-text-wrap" href="" ng-repeat="module in modules" ng-click="goToClass()">
+        <h4>{{module.code}}</h4>
+        <h2>{{module.name}}</h2>
+        <p>{{module.availability.start}} - {{module.availability.end}}</p>
       </ion-item>
     </ion-list>
     <br>

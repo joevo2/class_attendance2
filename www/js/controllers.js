@@ -1,6 +1,14 @@
 angular.module('app.controllers', ['app.login', 'app.signup'])
   .controller('homeCtrl', function($scope, $state, $ionicPopover, $ionicHistory) {
 
+    $scope.goToClass = function() {
+      if ((Parse.User.current()).get('accountType') == 'Lecturer') {
+        $state.go('class_lecturer');
+      } else {
+        $state.go('class');
+      }
+    };
+
     // Ionic popover
     $ionicPopover.fromTemplateUrl('home-menu.html', {
       scope: $scope
@@ -32,7 +40,46 @@ angular.module('app.controllers', ['app.login', 'app.signup'])
     };
 
     // Student attended class
-    
+    $scope.modules = [];
+    var StudentModule = Parse.Object.extend("StudentDetails");
+    var query = new Parse.Query(StudentModule);
+    query.equalTo("parent", (Parse.User.current()).id);
+    query.first({
+      success: function(results) {
+        var object = results;
+        $scope.modulesCode = object.get('modules');
+        console.log($scope.modulesCode);
+        var Modules = Parse.Object.extend("Modules");
+        queryX = new Parse.Query(Modules);
+        queryX.equalTo("objectId", $scope.modulesCode[0]);
+        queryX.find({
+          success: function(results) {
+            for (var i = 0; i < results.length; i++) {
+              var object = results[i];
+              $scope.modules[i] = {
+                id: object.id,
+                code: results[i].get('code'),
+                name: results[i].get('name'),
+                prerequisite: results[i].get('prerequisite'),
+                lecturer: results[i].get('lecturer'),
+                availability: results[i].get('availability'),
+              };
+            }
+            window.localStorage['module'] = JSON.stringify($scope.modules);
+            console.log($scope.modules);
+          },
+          error: function(error) {
+            console.log("Error: " + error.code + " " + error.message);
+          }
+        });
+      },
+      error: function(error) {
+        console.log("Error: " + error.code + " " + error.message);
+      }
+    });
+    if (window.localStorage['module']) {
+      $scope.modules = JSON.parse(window.localStorage['module']);
+    }
 
   })
 
@@ -51,7 +98,7 @@ angular.module('app.controllers', ['app.login', 'app.signup'])
           prerequisite: results[i].get('prerequisite'),
           lecturer: results[i].get('lecturer'),
           availability: results[i].get('availability'),
-        }
+        };
       }
       window.localStorage['module'] = JSON.stringify($scope.modules);
     },
