@@ -1,12 +1,13 @@
 angular.module('app.controllers', ['app.login', 'app.signup'])
   .controller('homeCtrl', function($scope, $state, $ionicPopover, $ionicHistory) {
 
-    $scope.goToClass = function() {
+    $scope.goToClass = function(selectedModule) {
       if ((Parse.User.current()).get('accountType') == 'Lecturer') {
         $state.go('class_lecturer');
       } else {
         $state.go('class');
       }
+      //window.localStorage['selectedModule'] = selectedModule;
     };
 
     // Ionic popover
@@ -171,7 +172,10 @@ angular.module('app.controllers', ['app.login', 'app.signup'])
 
 })
 
-.controller('classCtrl', function($scope, $ionicPopup) {
+.controller('classCtrl', function($scope, $ionicPopup, $ionicHistory) {
+  // if (window.localStorage['selectedModule']) {
+  //   $scope.class = JSON.parse(window.localStorage['selectedModule']);
+  // }
   $scope.attendClass = function() {
     var confirmPopup = $ionicPopup.confirm({
        title: 'Confirm',
@@ -181,6 +185,22 @@ angular.module('app.controllers', ['app.login', 'app.signup'])
      confirmPopup.then(function(res) {
        if(res) {
          console.log('You are sure');
+       } else {
+         console.log('You are not sure');
+       }
+     });
+  };
+
+  $scope.finishClass = function() {
+    var confirmPopup = $ionicPopup.confirm({
+       title: 'Confirm',
+       template: 'Are you sure you want to end the class?'
+     });
+
+     confirmPopup.then(function(res) {
+       if(res) {
+         console.log('You are sure');
+         $ionicHistory.goBack();
        } else {
          console.log('You are not sure');
        }
