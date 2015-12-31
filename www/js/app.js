@@ -19,4 +19,4 @@ angular.module('app',
       StatusBar.styleDefault();
     }
   });
-})
+});

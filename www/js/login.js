@@ -16,7 +16,7 @@ angular.module('app.login', [])
           else {
             $state.go('home');
           }
-          delete $scope.login;
+          $scope.login = {};
         },
         error: function(user, error) {
           // The login failed. Check error to see why.
@@ -24,4 +24,4 @@ angular.module('app.login', [])
         }
       });
     };
-  })
+  });

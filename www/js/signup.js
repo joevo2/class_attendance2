@@ -15,10 +15,7 @@ angular.module('app.signup', [])
         success: function(user) {
           // Hooray! Let them use the app now.
           alert("Successfully created account for " + $scope.signup.firstName + " " + $scope.signup.lastName);
-          $ionicHistory.nextViewOptions({
-            disableBack: true
-          });
-          $state.go('login');
+          $ionicHistory.goBack();
         },
         error: function(user, error) {
           // Show the error message somewhere and let the user try again.
@@ -26,4 +23,4 @@ angular.module('app.signup', [])
         }
       });
     };
-  })
+  });

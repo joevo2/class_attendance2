@@ -30,6 +30,10 @@ angular.module('app.controllers', ['app.login', 'app.signup'])
     $scope.goto = function(page) {
       $state.go(page);
     };
+
+    // Student attended class
+    
+
   })
 
 .controller('register_moduleCtrl', function($scope, $ionicModal, $ionicHistory, $ionicPopup) {
@@ -120,8 +124,21 @@ angular.module('app.controllers', ['app.login', 'app.signup'])
 
 })
 
-.controller('classCtrl', function($scope) {
+.controller('classCtrl', function($scope, $ionicPopup) {
+  $scope.attendClass = function() {
+    var confirmPopup = $ionicPopup.confirm({
+       title: 'Confirm',
+       template: 'Are you sure you are attending the class?<br><span style="color: red; font-weight: bold;">Fraud Class attendance would be blacklisted?</span>'
+     });
 
+     confirmPopup.then(function(res) {
+       if(res) {
+         console.log('You are sure');
+       } else {
+         console.log('You are not sure');
+       }
+     });
+  };
 })
 
 .controller('adminCtrl', function($scope, $state, $ionicPopover, $ionicHistory) {
@@ -166,7 +183,7 @@ angular.module('app.controllers', ['app.login', 'app.signup'])
         var object = results[i];
         $scope.courses[i] = {
           name: object.get('name'),
-        }
+        };
         console.log(results[i].get('name'));
       }
       window.localStorage['courses'] = JSON.stringify($scope.courses);
@@ -183,14 +200,14 @@ angular.module('app.controllers', ['app.login', 'app.signup'])
   // Get modules
   $scope.modules = [];
   var Modules = Parse.Object.extend("Modules");
-  var query = new Parse.Query(Modules);
-  query.find({
+  var queryM = new Parse.Query(Modules);
+  queryM.find({
     success: function(results) {
       for (var i = 0; i < results.length; i++) {
         var object = results[i];
         $scope.modules[i] = {
           name: object.get('name'),
-        }
+        };
         console.log(results[i].get('name'));
       }
     },
@@ -290,7 +307,7 @@ angular.module('app.controllers', ['app.login', 'app.signup'])
     if (typeof(val) === 'undefined') {
       console.log('No date selected');
     } else {
-      console.log('Selected date is : ', val)
+      console.log('Selected date is : ', val);
     }
   };
 
@@ -317,4 +334,4 @@ angular.module('app.controllers', ['app.login', 'app.signup'])
       console.log('Selected epoch is : ', val, 'and the time is ', selectedTime.getUTCHours(), ':', selectedTime.getUTCMinutes(), 'in UTC');
     }
   }
-})
+});
