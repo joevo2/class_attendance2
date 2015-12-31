@@ -8,13 +8,13 @@
               <p>9:00am - 11:00am</p>
             </ion-item>
 
-            <div class="item item-divider">Lecturer</div>
-            <div class="item item-body">Mr John</div>
-
-            <!-- <div class="item item-divider">Notes</div>
-            <div class="item item-body"></div> -->
+            <div class="item item-divider">Student List</div>
+            <ion-list>
+              <ion-checkbox ng-model="students['name']">Joel Yek</ion-checkbox>
+              <ion-checkbox>Lim Meng Hong</ion-checkbox>
+              <ion-checkbox>Allison Tu</ion-checkbox>
+            </ion-list>
         </div>
-        <button class="button button-full button-assertive" ng-click="attendClass()">Attend</button>
-
+        <button class="button button-full button-assertive" ng-click="finishClass()">Finish Class</button>
     </ion-content>
 </ion-view>
