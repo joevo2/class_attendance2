@@ -1,5 +1,33 @@
 <ion-view title="Register Module">
   <ion-content padding="true" class="has-header">
-
+    <ion-list>
+      <div class="item item-divider">
+        Module Available
+      </div>
+      <a class="item" ng-repeat="module in modules" ng-click="openModal(module)">{{module.name}}</a>
+    </ion-list>
   </ion-content>
 </ion-view>
+
+<script id="confirm_module.html" type="text/ng-template">
+  <ion-modal-view>
+    <ion-header-bar>
+      <h1 class="title">Confirm module</h1>
+      <div class="buttons">
+        <button class="button button-clear" ng-click="closeModal()">Close</button>
+      </div>
+    </ion-header-bar>
+    <ion-content padding="true">
+      <ion-list>
+        <ion-item class="item-text-wrap" href="#/class">
+          <h4>{{selected.code}}</h4>
+          <h2>{{selected.name}}</h2>
+          <h3>Starting: {{selected.availability.start}}</h3>
+          <h3>Ending: {{selected.availability.end}}</h3>
+          <p>{{selected.availability.week['mon'].start}} - {{selected.availability.week['mon'].end}}</p>
+        </ion-item>
+      </ion-list>
+      <button class="button button-full button-balanced" ng-click="confirmModule()">Confirm</button>
+    </ion-content>
+  </ion-modal-view>
+</script>

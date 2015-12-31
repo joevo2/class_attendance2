@@ -1,20 +1,20 @@
 angular.module('app.routes', [])
-.config(function($stateProvider, $urlRouterProvider) {
-  // Parse Initilise  with API key
-  Parse.initialize("4nqAmOf9scv9vWFCdeZkNMH0yHSXAAmb3Pnf5mk9", "b2wahr5y1nRpV4vlB3mLWBNTtKVBriHiq3Ao3LZg");
+  .config(function($stateProvider, $urlRouterProvider) {
+    // Parse Initilise  with API key
+    Parse.initialize("4nqAmOf9scv9vWFCdeZkNMH0yHSXAAmb3Pnf5mk9", "b2wahr5y1nRpV4vlB3mLWBNTtKVBriHiq3Ao3LZg");
 
-  var path = '/login';
-  if (Parse.User.current()) {
-    path = '/home';
-    var user = Parse.User.current();
-    if (user.get("accountType") == "Admin") {
-      path = '/admin'
+    var path = '/login';
+    if (Parse.User.current()) {
+      path = '/home';
+      var user = Parse.User.current();
+      if (user.get("accountType") == "Admin") {
+        path = '/admin'
+      }
     }
-  }
 
-  $stateProvider
+    $stateProvider
 
-    .state('login', {
+      .state('login', {
       url: '/login',
       templateUrl: 'templates/login.html',
       controller: 'loginCtrl'
@@ -62,6 +62,6 @@ angular.module('app.routes', [])
       controller: 'classCtrl'
     });
 
-  // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise(path);
-});
+    // if none of the above states are matched, use this as the fallback
+    $urlRouterProvider.otherwise(path);
+  });

@@ -5,7 +5,9 @@
     </button>
   </ion-nav-buttons>
   <ion-content padding="true" class="has-header">
-    <h1>Today</h1>
+    <div class="item item-divider">
+      Today
+    </div>
     <ion-list>
       <ion-item class="item-thumbnail-left item-text-wrap" href="#/class">
         <h4>MOD002663</h4>
@@ -19,12 +21,15 @@
       </ion-item>
     </ion-list>
     <div class="spacer" style="width: 300px; height: 34px;"></div>
-    <h1>Tomorrow</h1>
+    <div class="item item-divider">
+      Today
+    </div>
     <ion-list>
       <ion-item>Item 1</ion-item>
       <ion-item>Item 2</ion-item>
       <ion-item>Item 3</ion-item>
     </ion-list>
+    <button class="button button-full button-stable">View Week Schedule</button>
   </ion-content>
   <nav mfb-menu position="br" effect="zoomin" active-icon="ion-plus-round" resting-icon="ion-plus-round" toggling-method="hover">
     <button mfb-button icon="fa fa-book" label="Add Module" ng-click="goto('register_module')"></button>
