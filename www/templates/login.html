@@ -1,17 +1,17 @@
 <ion-view title="Class Attendance">
-    <ion-content padding="true" class="has-header">
-        <img src="img/logo.jpg" style="width: 100%; margin: 50px 0 50px 0;" />
-        <form class="list">
-            <label class="item item-input">
-                <span class="input-label">Username</span>
-                <input type="email" placeholder="john@student.anglia.ac.uk" ng-model="login.username">
-            </label>
-            <label class="item item-input">
-                <span class="input-label">Password</span>
-                <input type="password" placeholder="Password" ng-model="login.password">
-            </label>
-            <div class="spacer" style="width: 300px; height: 1dw0px;"></div>
-            <button ng-click="doLogin()" class="button button-positive button-block button-full">Sign in</button>
-        </form>
-    </ion-content>
+  <ion-content padding="true" class="has-header">
+    <!-- <img src="img/logo.jpg" style="width: 100%; margin: 50px 0 50px 0;" /> -->
+    <form class="list" ng-submit="doLogin()">
+      <label class="item item-input">
+        <span class="input-label">Username</span>
+        <input type="email" placeholder="john@student.anglia.ac.uk" ng-model="login.username">
+      </label>
+      <label class="item item-input">
+        <span class="input-label">Password</span>
+        <input type="password" placeholder="Password" ng-model="login.password">
+      </label>
+      <div class="spacer" style="width: 300px; height: 1dw0px;"></div>
+      <button type="submit" class="button button-positive button-block  button-full">Sign in</button>
+    </form>
+  </ion-content>
 </ion-view>
