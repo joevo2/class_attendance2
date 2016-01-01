@@ -5,8 +5,6 @@ angular.module('app',
   'app.services',
   'app.directives',
   'validation.match',
-  'ionic-datepicker',
-  'ionic-timepicker',
   'ti-segmented-control',
   'ng-mfb'])
 .run(function($ionicPlatform) {
