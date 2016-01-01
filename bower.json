@@ -2,7 +2,7 @@
   "name": "HelloIonic",
   "private": "true",
   "devDependencies": {
-    "ionic": "driftyco/ionic-bower#1.2.1"
+    "ionic": "driftyco/ionic-bower#1.2.2"
   },
   "dependencies": {
     "ng-material-floating-button": "ng-mfb#~0.6.2",
