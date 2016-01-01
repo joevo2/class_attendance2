@@ -1,4 +1,61 @@
 <ion-view title="Add Module">
   <ion-content padding="true" class="has-header">
+    <form class="list" ng-submit="addModule()" name="signupForm">
+      <div class="item item-divider">
+        Details
+      </div>
+      <label class="item item-input">
+        <span class="input-label">Module code</span>
+        <input type="text" placeholder="Eg: MOD001" ng-model="module.code" required>
+      </label>
+      <label class="item item-input item-stacked-label">
+        <span class="input-label">Module name</span>
+        <input type="text" placeholder="Eg: Introduction to Computer" ng-model="module.name" required>
+      </label>
+      <label class="item item-input item-stacked-label">
+        <span class="input-label">Course prerequisite</span>
+        <input type="text" placeholder="Eg: Computing Essential" ng-model="module.prerequisite" required>
+      </label>
+      <label class="item item-input item-stacked-label">
+        <span class="input-label">Lecturer</span>
+        <input type="text" placeholder="Name" ng-model="module.lecturer" required>
+      </label>
+      <div class="item item-divider">
+        Availability
+      </div>
+      <label class="item item-input">
+        <div class="input-label">
+          Start date
+        </div>
+        <input type="date" name="name" value="">
+      </label>
+      <label class="item item-input">
+        <div class="input-label">
+          End date
+        </div>
+        <input type="date" name="name" value="">
+      </label>
+      <ion-list>
+        <div class="item item-divider">
+          Week
+        </div>
+        <div ng-repeat="day in week track by $index">
+          <ion-checkbox ng-model="x">{{day}}</ion-checkbox>
+          <div class="row" style="padding: 0" ng-show="x">
+            <div class="col">
+              Start
+              <input type="time" name="name" value="">
+            </div>
+            <div class="col">
+              End
+              <input type="time" name="name" value="">
+            </div>
+          </div>
+
+        </div>
+      </ion-list>
+      <div class="spacer" style="width: 300px; height: 1dw0px;"></div>
+      <button type="submit" class="button button-positive button-block button-full">Add module</button>
+    </form>
   </ion-content>
 </ion-view>
