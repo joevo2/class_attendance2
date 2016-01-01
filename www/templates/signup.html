@@ -41,9 +41,7 @@
           Course
         </div>
         <select ng-model="signup.course">
-          <option>Student</option>
-          <option>Lecturer</option>
-          <option>Admin</option>
+          <option ng-repeat="course in courses">{{course.name}}</option>
         </select>
       </label>
       <div class="spacer" style="width: 300px; height: 1dw0px;"></div>

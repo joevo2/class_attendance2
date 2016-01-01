@@ -1,7 +1,12 @@
 angular.module('app.signup', [])
-  .controller('signupCtrl', function($scope, $state, $ionicHistory) {
+  .controller('signupCtrl', function($scope, $state, $ionicHistory, $localstorage) {
     $scope.signup = {};
-    // Login
+
+    if ($localstorage.getObject('courses')) {
+      $scope.courses = $localstorage.getObject('courses');
+    }
+
+    // Create a new account
     $scope.doSignup = function() {
       // Parse user sign up
       var user = new Parse.User();
