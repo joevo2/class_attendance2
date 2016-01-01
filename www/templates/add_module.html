@@ -6,15 +6,15 @@
       </div>
       <label class="item item-input">
         <span class="input-label">Module code</span>
-        <input type="text" placeholder="Exp: MOD001" ng-model="module.code" required>
+        <input type="text" placeholder="Eg: MOD001" ng-model="module.code" required>
       </label>
       <label class="item item-input item-stacked-label">
         <span class="input-label">Module name</span>
-        <input type="text" placeholder="Exp: Introduction to Computer" ng-model="module.name" required>
+        <input type="text" placeholder="Eg: Introduction to Computer" ng-model="module.name" required>
       </label>
       <label class="item item-input item-stacked-label">
         <span class="input-label">Course prerequisite</span>
-        <input type="text" placeholder="Exp: Computing Essential" ng-model="module.prerequisite" required>
+        <input type="text" placeholder="Eg: Computing Essential" ng-model="module.prerequisite" required>
       </label>
       <label class="item item-input item-stacked-label">
         <span class="input-label">Lecturer</span>
@@ -27,17 +27,13 @@
         <div class="input-label">
           Start date
         </div>
-        <ionic-datepicker input-obj="datepickerObject">
-          <button class="button button-block button-balanced"> {{datepickerObject.inputDate | date:'dd - MMMM - yyyy'}}</button>
-        </ionic-datepicker>
+        <input type="date" name="name" value="">
       </label>
       <label class="item item-input">
         <div class="input-label">
           End date
         </div>
-        <ionic-datepicker input-obj="datepickerObject">
-          <button class="button button-block button-assertive"> {{datepickerObject.inputDate | date:'dd - MMMM - yyyy'}}</button>
-        </ionic-datepicker>
+        <input type="date" name="name" value="">
       </label>
       <ion-list>
         <div class="item item-divider">
@@ -45,20 +41,14 @@
         </div>
         <div ng-repeat="day in week track by $index">
           <ion-checkbox ng-model="x">{{day}}</ion-checkbox>
-          <div class="row" style="padding: 0">
+          <div class="row" style="padding: 0" ng-show="x">
             <div class="col">
-              <ionic-timepicker ng-show="x" input-obj="timePickerObject">
-                <button class="button button-block button-balanced overflowShow">
-                  <standard-time-meridian etime='timePickerObject.inputEpochTime'></standard-time-meridian>
-                </button>
-              </ionic-timepicker>
+              Start
+              <input type="time" name="name" value="">
             </div>
             <div class="col">
-              <ionic-timepicker ng-show="x" input-obj="timePickerObject">
-                <button class="button button-block button-assertive overflowShow">
-                  <standard-time-meridian etime='timePickerObject.inputEpochTime'></standard-time-meridian>
-                </button>
-              </ionic-timepicker>
+              End
+              <input type="time" name="name" value="">
             </div>
           </div>
 
