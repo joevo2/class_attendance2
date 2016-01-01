@@ -5,16 +5,29 @@
     </button>
   </ion-nav-buttons>
   <ion-content padding="true" class="has-header">
-    <h2>Courses</h2>
+    <ti-segmented-control on-select="buttonClicked($index)" style="width: 200px; margin: auto;">
+      <ti-segmented-control-button class="button-positive" title="'Student'" selected></ti-segmented-control-button>
+      <ti-segmented-control-button class="button-positive" title="'Lecturer'"></ti-segmented-control-button>
+    </ti-segmented-control>
+    <br>
+    <div class="item item-divider">
+      Courses
+    </div>
     <ion-list>
-      <ion-item>Item 1</ion-item>
-      <ion-item>Item 2</ion-item>
-      <ion-item>Item 3</ion-item>
+      <a class="item" ng-repeat="course in courses">{{course.name}}</a>
+    </ion-list>
+    <br>
+    <div class="item item-divider">
+      Module
+    </div>
+    <ion-list>
+      <a class="item" ng-repeat="module in modules">{{module.name}}</a>
     </ion-list>
   </ion-content>
   <nav mfb-menu position="br" effect="zoomin" active-icon="ion-plus-round" resting-icon="ion-plus-round" toggling-method="hover">
-    <button mfb-button icon="fa fa-graduation-cap" label="Add Course" ng-click="goto('add_course')"></button>
+    <button mfb-button icon="fa fa-user" label="Add account" ng-click="goto('signup')"></button>
     <button mfb-button icon="fa fa-book" label="Add Module" ng-click="goto('add_module')"></button>
+    <button mfb-button icon="fa fa-graduation-cap" label="Add Course" ng-click="goto('add_course')"></button>
   </nav>
 </ion-view>
 
@@ -24,13 +37,13 @@
       <h1 class="title">Menu</h1>
     </ion-header-bar>
     <ion-content>
-    <ul class="list">
-      <li class="item">
-        <a class="item-icon-left" ng-click="logout()">
-          <i class="icon ion-log-out"></i> Logout
-        </a>
-      </li>
-    </ul>
+      <ul class="list">
+        <li class="item">
+          <a class="item-icon-left" ng-click="logout()">
+            <i class="icon ion-log-out"></i> Logout
+          </a>
+        </li>
+      </ul>
     </ion-content>
   </ion-popover-view>
 </script>
