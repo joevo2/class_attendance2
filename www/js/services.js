@@ -16,6 +16,8 @@ angular.module('app.services', [])
   };
 }])
 
+// This services will get the courses from parse database
+// and create an localstroage object to be used in the app
 .factory('courses', function($localstorage) {
   var courseData = [];
   return {
@@ -31,6 +33,30 @@ angular.module('app.services', [])
             };
           }
           $localstorage.setObject('courses', courseData);
+        },
+        error: function(error) {
+          console.log("Error: " + error.code + " " + error.message);
+        }
+      });
+    }
+  };
+})
+
+.factory('modules', function($localstorage) {
+  var moduleData = [];
+  return {
+    get: function() {
+      var Modules = Parse.Object.extend("Modules");
+      var query = new Parse.Query(Modules);
+      query.find({
+        success: function(results) {
+          for (var i = 0; i < results.length; i++) {
+            var object = results[i];
+            moduleData[i] = {
+              name: object.get('name'),
+            };
+          }
+          $localstorage.setObject('modules', moduleData);
         },
         error: function(error) {
           console.log("Error: " + error.code + " " + error.message);

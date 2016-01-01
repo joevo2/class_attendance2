@@ -1,5 +1,6 @@
 angular.module('app.admin', [])
-.controller('adminCtrl', function($scope, $state, $ionicPopover, $ionicHistory, courses, $localstorage) {
+.controller('adminCtrl', function($scope, $state, $ionicPopover, $ionicHistory, courses, modules, $localstorage, $window) {
+
 
   // Get courses services in service.js
   // Where it will fetch the data from parse and save into
@@ -7,6 +8,12 @@ angular.module('app.admin', [])
   courses.get();
   if ($localstorage.getObject('courses')) {
     $scope.courses = $localstorage.getObject('courses');
+  }
+
+  // Get modules in services.js
+  modules.get();
+  if ($localstorage.getObject('courses')) {
+    $scope.modules = $localstorage.getObject('modules');
   }
 
   // Ionic popover
@@ -29,6 +36,7 @@ angular.module('app.admin', [])
   // Logout
   $scope.logout = function() {
     Parse.User.logOut();
+    localStorage.clear();
     $ionicHistory.nextViewOptions({
       disableBack: true
     });
@@ -39,23 +47,4 @@ angular.module('app.admin', [])
   $scope.goto = function(page) {
     $state.go(page);
   };
-
-  // Get modules
-  // $scope.modules = [];
-  // var Modules = Parse.Object.extend("Modules");
-  // var queryM = new Parse.Query(Modules);
-  // queryM.find({
-  //   success: function(results) {
-  //     for (var i = 0; i < results.length; i++) {
-  //       var object = results[i];
-  //       $scope.modules[i] = {
-  //         name: object.get('name'),
-  //       };
-  //       console.log(results[i].get('name'));
-  //     }
-  //   },
-  //   error: function(error) {
-  //     console.log("Error: " + error.code + " " + error.message);
-  //   }
-  // });
 });
