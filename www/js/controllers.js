@@ -2,6 +2,7 @@ angular.module('app.controllers',
 ['app.login',
 'app.add_course',
 'app.add_module',
+'app.admin',
  'app.signup'])
   .controller('homeCtrl', function($scope, $state, $ionicPopover, $ionicHistory) {
     $scope.goToClass = function(selectedModule) {
@@ -209,80 +210,4 @@ angular.module('app.controllers',
        }
      });
   };
-})
-
-.controller('adminCtrl', function($scope, $state, $ionicPopover, $ionicHistory) {
-  // Ionic popover
-  $ionicPopover.fromTemplateUrl('admin-menu.html', {
-    scope: $scope
-  }).then(function(popover) {
-    $scope.popover = popover;
-  });
-  $scope.openPopover = function($event) {
-    $scope.popover.show($event);
-  };
-  $scope.closePopover = function() {
-    $scope.popover.hide();
-  };
-  //Cleanup the popover when we're done with it!
-  $scope.$on('$destroy', function() {
-    $scope.popover.remove();
-  });
-
-  // Logout
-  $scope.logout = function() {
-    Parse.User.logOut();
-    $ionicHistory.nextViewOptions({
-      disableBack: true
-    });
-    $state.go('login');
-    $scope.closePopover();
-  };
-
-  $scope.goto = function(page) {
-    $state.go(page);
-  };
-
-  // Get courses
-  $scope.courses = [];
-  var Courses = Parse.Object.extend("Courses");
-  var query = new Parse.Query(Courses);
-  query.find({
-    success: function(results) {
-      for (var i = 0; i < results.length; i++) {
-        var object = results[i];
-        $scope.courses[i] = {
-          name: object.get('name'),
-        };
-        console.log(results[i].get('name'));
-      }
-      window.localStorage['courses'] = JSON.stringify($scope.courses);
-    },
-    error: function(error) {
-      console.log("Error: " + error.code + " " + error.message);
-    }
-  });
-
-  if (window.localStorage['courses']) {
-    $scope.courses = JSON.parse(window.localStorage['courses']);
-  }
-
-  // Get modules
-  $scope.modules = [];
-  var Modules = Parse.Object.extend("Modules");
-  var queryM = new Parse.Query(Modules);
-  queryM.find({
-    success: function(results) {
-      for (var i = 0; i < results.length; i++) {
-        var object = results[i];
-        $scope.modules[i] = {
-          name: object.get('name'),
-        };
-        console.log(results[i].get('name'));
-      }
-    },
-    error: function(error) {
-      console.log("Error: " + error.code + " " + error.message);
-    }
-  });
 });
