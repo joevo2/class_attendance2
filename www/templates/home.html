@@ -9,7 +9,7 @@
       Enrolled class
     </div>
     <ion-list>
-      <ion-item class="item-text-wrap" href="" ng-repeat="module in modules" ng-click="goToClass()">
+      <ion-item class="item-text-wrap" href="" ng-repeat="module in modules" ng-click="goToClass(module)">
         <h4>{{module.code}}</h4>
         <h2>{{module.name}}</h2>
         <p>{{(module.availability.start).substring(0,9)}} - {{(module.availability.end).substring(0,9)}}</p>

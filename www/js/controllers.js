@@ -4,14 +4,14 @@ angular.module('app.controllers', ['app.login',
     'app.admin',
     'app.signup'
   ])
-  .controller('homeCtrl', function($scope, $state, $ionicPopover, $ionicHistory) {
+  .controller('homeCtrl', function($scope, $state, $ionicPopover, $ionicHistory, $localstorage) {
     $scope.goToClass = function(selectedModule) {
       if ((Parse.User.current()).get('accountType') == 'Lecturer') {
         $state.go('class_lecturer');
       } else {
         $state.go('class');
       }
-      //window.localStorage['selectedModule'] = selectedModule;
+      $localstorage.setObject('selectedModule', selectedModule);
     };
 
     // Ionic popover
@@ -39,6 +39,7 @@ angular.module('app.controllers', ['app.login',
       });
       $state.go('login');
       $scope.closePopover();
+      localStorage.clear();
     };
     $scope.goto = function(page) {
       $state.go(page);
@@ -154,19 +155,59 @@ angular.module('app.controllers', ['app.login',
 
 })
 
-.controller('classCtrl', function($scope, $ionicPopup, $ionicHistory) {
-  // if (window.localStorage['selectedModule']) {
-  //   $scope.class = JSON.parse(window.localStorage['selectedModule']);
-  // }
+.controller('classCtrl', function($scope, $ionicPopup, $ionicHistory, $localstorage) {
+  $scope.selectedModule = $localstorage.getObject('selectedModule');
   $scope.attendClass = function() {
+    console.log(((new Date()).toDateString()));
     var confirmPopup = $ionicPopup.confirm({
       title: 'Confirm',
       template: 'Are you sure you are attending the class?<br><span style="color: red; font-weight: bold;">Fraud class attendance would be blacklisted</span>'
     });
-
     confirmPopup.then(function(res) {
       if (res) {
-        console.log('You are sure');
+        var ModuleInstance = Parse.Object.extend("ModuleInstance");
+        var query = new Parse.Query(ModuleInstance);
+        query.equalTo("date", ((new Date()).toDateString()));
+        query.equalTo("name", $scope.selectedModule.name);
+        query.first({
+          success: function(Result) {
+            if(Result) {
+              Result.save(null, {
+                success: function(result) {
+                  result.addUnique("attendance",
+                  {
+                    name: (Parse.User.current()).get('username'),
+                    confirm: "",
+                  });
+                  result.save();
+                  $scope.attend = true;
+                }
+              });
+            }
+            else {
+              var moduleInstance = new ModuleInstance();
+              moduleInstance.save({
+                code: ($scope.selectedModule.code).toUpperCase(),
+                name: $scope.selectedModule.name,
+                lecturer: $scope.selectedModule.lecturer,
+                date: ((new Date()).toDateString()),
+                attendance: [{
+                  name: (Parse.User.current()).get('username'),
+                  confirm: "",
+                }],
+              }, {
+                success: function(courses) {
+                  console.log("Saved");
+                },
+                error: function(courses, error) {
+                  console.log("Failed " + error.message);
+                }
+              });
+              $ionicHistory.goBack();
+              $scope.attend = true;
+            }
+          }
+        });
       } else {
         console.log('You are not sure');
       }
@@ -181,10 +222,9 @@ angular.module('app.controllers', ['app.login',
 
     confirmPopup.then(function(res) {
       if (res) {
-        console.log('You are sure');
-        $ionicHistory.goBack();
+
       } else {
-        console.log('You are not sure');
+        console.log("cancelled");
       }
     });
   };
