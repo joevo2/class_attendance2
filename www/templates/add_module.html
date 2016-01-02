@@ -39,16 +39,16 @@
         <div class="item item-divider">
           Week
         </div>
-        <div ng-repeat="day in week">
+        <div ng-repeat="day in week track by $index">
           <ion-checkbox ng-model="x">{{day.name}}</ion-checkbox>
-          <div class="row" style="padding: 0" ng-show="x">
+          <div class="row item" style="padding: 0" ng-show="x">
             <div class="col">
-              Start
+              Start time
               <input type="time" name="name" ng-model="day.start">
             </div>
             <div class="col">
-              End
-              <input type="time" name="name" value="" ng-model="day.end"> 
+              End time
+              <input type="time" name="name" value="" ng-model="day.end">
             </div>
           </div>
         </div>

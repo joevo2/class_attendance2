@@ -35,18 +35,14 @@ angular.module('app.add_module', [])
       prerequisite: $scope.module.prerequisite,
       lecturer: $scope.module.lecturer,
       availability: {
-        start: "1 Oct 2015",
-        end: "1 Jan 2016",
-        week: {
-          tue: {
-            start: "1200",
-            end: "1500",
-          }
-        }
+        start: $scope.module.start,
+        end: $scope.module.end,
+        week: $scope.week,
       }
     }, {
       success: function(courses) {
         console.log("Saved");
+        alert("Successfully created "+$scope.module.name);
       },
       error: function(courses, error) {
         console.log("Failed " + error.message);
