@@ -6,17 +6,17 @@
   </ion-nav-buttons>
   <ion-content padding="true" class="has-header">
     <div class="item item-divider">
-      Today
+      Enrolled class
     </div>
     <ion-list>
       <ion-item class="item-text-wrap" href="" ng-repeat="module in modules" ng-click="goToClass()">
         <h4>{{module.code}}</h4>
         <h2>{{module.name}}</h2>
-        <p>{{module.availability.start}} - {{module.availability.end}}</p>
+        <p>{{(module.availability.start).substring(0,9)}} - {{(module.availability.end).substring(0,9)}}</p>
       </ion-item>
     </ion-list>
     <br>
-    <div class="item item-divider">
+    <!-- <div class="item item-divider">
       Tomorrow
     </div>
     <ion-list>
@@ -25,7 +25,7 @@
         <h2>Undergraduate Major Project</h2>
         <p>11:00am - 2:00pm</p>
       </ion-item>
-    </ion-list>
+    </ion-list> -->
     <!-- <button class="button button-full button-stable">View Week Schedule</button> -->
   </ion-content>
   <nav mfb-menu position="br" effect="zoomin" active-icon="ion-plus-round" resting-icon="ion-plus-round" toggling-method="hover">
@@ -34,17 +34,17 @@
 </ion-view>
 
 <script id="home-menu.html" type="text/ng-template">
-  <ion-popover-view style="height:160px;">
+  <ion-popover-view style="height:100px;">
     <ion-header-bar>
       <h1 class="title">Menu</h1>
     </ion-header-bar>
     <ion-content>
     <ul class="list">
-      <li class="item">
+      <!--li class="item">
         <a class="item-icon-left">
           <i class="icon ion-person"></i> Profile
         </a>
-      </li>
+      </li-->
       <li class="item">
         <a class="item-icon-left" ng-click="logout()">
           <i class="icon ion-log-out"></i> Logout

@@ -161,7 +161,7 @@ angular.module('app.controllers', ['app.login',
   $scope.attendClass = function() {
     var confirmPopup = $ionicPopup.confirm({
       title: 'Confirm',
-      template: 'Are you sure you are attending the class?<br><span style="color: red; font-weight: bold;">Fraud Class attendance would be blacklisted?</span>'
+      template: 'Are you sure you are attending the class?<br><span style="color: red; font-weight: bold;">Fraud class attendance would be blacklisted</span>'
     });
 
     confirmPopup.then(function(res) {
