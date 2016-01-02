@@ -138,12 +138,27 @@ angular.module('app.controllers', ['app.login',
         query.equalTo("parent", (Parse.User.current()).id);
         query.first({
           success: function(Result) {
-            Result.save(null, {
-              success: function(result) {
-                result.addUnique("modules", $scope.selected.id);
-                result.save();
-              }
-            });
+            if (Result) {
+              Result.save(null, {
+                success: function(result) {
+                  result.addUnique("modules", $scope.selected.id);
+                  result.save();
+                }
+              });
+            } else {
+              var studentDetails = new StudentDetails();
+              studentDetails.save({
+                parent: (Parse.User.current()).id,
+                modules: [$scope.selected.id]
+              }, {
+                success: function(courses) {
+                  console.log("Saved");
+                },
+                error: function(courses, error) {
+                  console.log("Failed " + error.message);
+                }
+              });
+            }
           }
         });
       } else {
