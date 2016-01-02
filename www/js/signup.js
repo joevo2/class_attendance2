@@ -15,6 +15,7 @@ angular.module('app.signup', [])
       user.set("firstName", $scope.signup.firstName);
       user.set("lastName", $scope.signup.lastName);
       user.set("accountType", $scope.signup.accountType);
+      user.set("course", $scope.signup.course);
 
       user.signUp(null, {
         success: function(user) {

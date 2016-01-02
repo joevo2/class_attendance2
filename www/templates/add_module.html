@@ -27,31 +27,30 @@
         <div class="input-label">
           Start date
         </div>
-        <input type="date" name="name" value="">
+        <input type="date" name="name" ng-model="module.start">
       </label>
       <label class="item item-input">
         <div class="input-label">
           End date
         </div>
-        <input type="date" name="name" value="">
+        <input type="date" name="name" value="" ng-model="module.end">
       </label>
       <ion-list>
         <div class="item item-divider">
           Week
         </div>
-        <div ng-repeat="day in week track by $index">
-          <ion-checkbox ng-model="x">{{day}}</ion-checkbox>
+        <div ng-repeat="day in week">
+          <ion-checkbox ng-model="x">{{day.name}}</ion-checkbox>
           <div class="row" style="padding: 0" ng-show="x">
             <div class="col">
               Start
-              <input type="time" name="name" value="" step="1800">
+              <input type="time" name="name" ng-model="day.start">
             </div>
             <div class="col">
               End
-              <input type="time" name="name" value="" step="1800">
+              <input type="time" name="name" value="" ng-model="day.end"> 
             </div>
           </div>
-
         </div>
       </ion-list>
       <div class="spacer" style="width: 300px; height: 1dw0px;"></div>
