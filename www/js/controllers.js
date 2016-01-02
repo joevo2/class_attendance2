@@ -1,9 +1,9 @@
-angular.module('app.controllers',
-['app.login',
-'app.add_course',
-'app.add_module',
-'app.admin',
- 'app.signup'])
+angular.module('app.controllers', ['app.login',
+    'app.add_course',
+    'app.add_module',
+    'app.admin',
+    'app.signup'
+  ])
   .controller('homeCtrl', function($scope, $state, $ionicPopover, $ionicHistory) {
     $scope.goToClass = function(selectedModule) {
       if ((Parse.User.current()).get('accountType') == 'Lecturer') {
@@ -88,31 +88,10 @@ angular.module('app.controllers',
 
   })
 
-.controller('register_moduleCtrl', function($scope, $ionicModal, $ionicHistory, $ionicPopup) {
-  $scope.modules = [];
-  var Modules = Parse.Object.extend("Modules");
-  var query = new Parse.Query(Modules);
-  query.find({
-    success: function(results) {
-      for (var i = 0; i < results.length; i++) {
-        var object = results[i];
-        $scope.modules[i] = {
-          id: object.id,
-          code: results[i].get('code'),
-          name: results[i].get('name'),
-          prerequisite: results[i].get('prerequisite'),
-          lecturer: results[i].get('lecturer'),
-          availability: results[i].get('availability'),
-        };
-      }
-      window.localStorage['module'] = JSON.stringify($scope.modules);
-    },
-    error: function(error) {
-      console.log("Error: " + error.code + " " + error.message);
-    }
-  });
-  if (window.localStorage['module']) {
-    $scope.modules = JSON.parse(window.localStorage['module']);
+.controller('register_moduleCtrl', function($scope, $ionicModal, $ionicHistory, $ionicPopup, modules, $localstorage) {
+  modules.get();
+  if ($localstorage.getObject('courses')) {
+    $scope.modules = $localstorage.getObject('modules');
   }
 
   $ionicModal.fromTemplateUrl('confirm_module.html', {
@@ -140,6 +119,7 @@ angular.module('app.controllers',
   $scope.$on('modal.removed', function() {
     // Execute action
   });
+  console.log($scope.selected);
 
   $scope.confirmModule = function() {
     //confirm
@@ -151,20 +131,18 @@ angular.module('app.controllers',
     confirmPopup.then(function(res) {
       if (res) {
         $scope.closeModal();
-        // Submit enrolled module to user accounts
+        // Query then update the existing student details
         var StudentDetails = Parse.Object.extend("StudentDetails");
-        var studentDetails = new StudentDetails();
-
-        studentDetails.set("parent", (Parse.User.current()).id);
-
-        studentDetails.save(null, {
-          success: function(studentDetails) {
-            studentDetails.set("modules", [$scope.selected.id]);
-            studentDetails.save();
-            console.log("Saved module");
-          },
-          error: function(error) {
-            console.log("Error: " + error.code + " " + error.message);
+        var query = new Parse.Query(StudentDetails);
+        query.equalTo("parent", (Parse.User.current()).id);
+        query.first({
+          success: function(Result) {
+            Result.save(null, {
+              success: function(result) {
+                result.addUnique("modules", $scope.selected.id);
+                result.save();
+              }
+            });
           }
         });
       } else {
@@ -182,32 +160,32 @@ angular.module('app.controllers',
   // }
   $scope.attendClass = function() {
     var confirmPopup = $ionicPopup.confirm({
-       title: 'Confirm',
-       template: 'Are you sure you are attending the class?<br><span style="color: red; font-weight: bold;">Fraud Class attendance would be blacklisted?</span>'
-     });
+      title: 'Confirm',
+      template: 'Are you sure you are attending the class?<br><span style="color: red; font-weight: bold;">Fraud Class attendance would be blacklisted?</span>'
+    });
 
-     confirmPopup.then(function(res) {
-       if(res) {
-         console.log('You are sure');
-       } else {
-         console.log('You are not sure');
-       }
-     });
+    confirmPopup.then(function(res) {
+      if (res) {
+        console.log('You are sure');
+      } else {
+        console.log('You are not sure');
+      }
+    });
   };
 
   $scope.finishClass = function() {
     var confirmPopup = $ionicPopup.confirm({
-       title: 'Confirm',
-       template: 'Are you sure you want to end the class?'
-     });
+      title: 'Confirm',
+      template: 'Are you sure you want to end the class?'
+    });
 
-     confirmPopup.then(function(res) {
-       if(res) {
-         console.log('You are sure');
-         $ionicHistory.goBack();
-       } else {
-         console.log('You are not sure');
-       }
-     });
+    confirmPopup.then(function(res) {
+      if (res) {
+        console.log('You are sure');
+        $ionicHistory.goBack();
+      } else {
+        console.log('You are not sure');
+      }
+    });
   };
 });

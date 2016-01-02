@@ -4,7 +4,7 @@
       <div class="item item-divider">
         Module Available
       </div>
-      <a class="item" ng-repeat="module in modules" ng-click="openModal(module)">{{module.name}}</a>
+      <a class="item" ng-repeat="module in modules" ng-click="openModal(module)">{{module.code}} - {{module.name}}</a>
     </ion-list>
   </ion-content>
 </ion-view>
@@ -22,9 +22,9 @@
         <ion-item class="item-text-wrap" href="#/class">
           <h4>{{selected.code}}</h4>
           <h2>{{selected.name}}</h2>
-          <h3>Starting: {{selected.availability.start}}</h3>
-          <h3>Ending: {{selected.availability.end}}</h3>
-          <p>{{selected.availability.week['mon'].start}} - {{selected.availability.week['mon'].end}}</p>
+          <h3>Starting: {{(selected.availability.start).substring(0,9)}}</h3>
+          <h3>Ending: {{(selected.availability.end).substring(0,9)}}</h3>
+          <!--p>{{selected.availability.week}}</p-->
         </ion-item>
       </ion-list>
       <button class="button button-full button-balanced" ng-click="confirmModule()">Confirm</button>

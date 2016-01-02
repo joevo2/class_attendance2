@@ -53,9 +53,15 @@ angular.module('app.services', [])
           for (var i = 0; i < results.length; i++) {
             var object = results[i];
             moduleData[i] = {
+              id: object.id,
+              code: object.get('code'),
               name: object.get('name'),
+              prerequisite: object.get('prerequisite'),
+              lecturer: object.get('lecturer'),
+              availability: object.get('availability'),
             };
           }
+          console.log(moduleData);
           $localstorage.setObject('modules', moduleData);
         },
         error: function(error) {
