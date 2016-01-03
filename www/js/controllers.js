@@ -5,6 +5,7 @@ angular.module('app.controllers', ['app.login',
     'app.signup'
   ])
   .controller('homeCtrl', function($scope, $state, $ionicPopover, $ionicHistory, $localstorage) {
+    $scope.name = (Parse.User.current()).get('firstName') + " " + (Parse.User.current()).get('lastName');
     $scope.goToClass = function(selectedModule) {
       if ((Parse.User.current()).get('accountType') == 'Lecturer') {
         $state.go('class_lecturer');
@@ -241,7 +242,7 @@ angular.module('app.controllers', ['app.login',
         } else {
           var name;
           if (type === 'lecturer') {
-            name = "";
+            name = null;
           } else {
             name = (Parse.User.current()).get('firstName') + " " + (Parse.User.current()).get('lastName');
           }
@@ -298,6 +299,8 @@ angular.module('app.controllers', ['app.login',
         console.log('Ending class');
         console.log($scope.students);
         $scope.getModuleInstance('end');
+        alert('Class ended');
+        $ionicHistory.goBack();
       } else {
         console.log("cancelled");
       }
