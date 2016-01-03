@@ -46,61 +46,67 @@ angular.module('app.controllers', ['app.login',
     };
 
     // Student attended class
-    $scope.modules = [];
-    var StudentModule = Parse.Object.extend("StudentDetails");
-    var query = new Parse.Query(StudentModule);
-    query.equalTo("parent", (Parse.User.current()).id);
-    query.first({
-      success: function(results) {
-        var object = results;
-        $scope.modulesCode = object.get('modules');
-        console.log($scope.modulesCode);
-        //var Modules = Parse.Object.extend("Modules");
-        // queryX = new Parse.Query(Modules);
-        // queryX.equalTo("objectId", $scope.modulesCode[0]);
+    $scope.getClass = function() {
+      $scope.modules = [];
+      var StudentModule = Parse.Object.extend("StudentDetails");
+      var query = new Parse.Query(StudentModule);
+      query.equalTo("parent", (Parse.User.current()).id);
+      query.first({
+        success: function(results) {
+          var object = results;
+          $scope.modulesCode = object.get('modules');
+          console.log($scope.modulesCode);
+          //var Modules = Parse.Object.extend("Modules");
+          // queryX = new Parse.Query(Modules);
+          // queryX.equalTo("objectId", $scope.modulesCode[0]);
 
-        var a = new Parse.Query("Modules");
-        a.equalTo("objectId", $scope.modulesCode[0]);
+          var a = new Parse.Query("Modules");
+          a.equalTo("objectId", $scope.modulesCode[0]);
 
-        var b = new Parse.Query("Modules");
-        b.equalTo("objectId", $scope.modulesCode[1]);
+          var b = new Parse.Query("Modules");
+          b.equalTo("objectId", $scope.modulesCode[1]);
 
-        var c = new Parse.Query("Modules");
-        c.equalTo("objectId", $scope.modulesCode[2]);
+          var c = new Parse.Query("Modules");
+          c.equalTo("objectId", $scope.modulesCode[2]);
 
-        var d = new Parse.Query("Modules");
-        d.equalTo("objectId", $scope.modulesCode[3]);
+          var d = new Parse.Query("Modules");
+          d.equalTo("objectId", $scope.modulesCode[3]);
 
-        var mainQuery = Parse.Query.or(a, b, c, d);
-        mainQuery.find({
-          success: function(results) {
-            for (var i = 0; i < results.length; i++) {
-              var object = results[i];
-              $scope.modules[i] = {
-                id: object.id,
-                code: results[i].get('code'),
-                name: results[i].get('name'),
-                prerequisite: results[i].get('prerequisite'),
-                lecturer: results[i].get('lecturer'),
-                availability: results[i].get('availability'),
-              };
+          var mainQuery = Parse.Query.or(a, b, c, d);
+          mainQuery.find({
+            success: function(results) {
+              for (var i = 0; i < results.length; i++) {
+                var object = results[i];
+                $scope.modules[i] = {
+                  id: object.id,
+                  code: results[i].get('code'),
+                  name: results[i].get('name'),
+                  prerequisite: results[i].get('prerequisite'),
+                  lecturer: results[i].get('lecturer'),
+                  availability: results[i].get('availability'),
+                };
+              }
+              $localstorage.setObject('module', $scope.modules);
+              console.log($scope.modules);
+            },
+            error: function(error) {
+              console.log("Error: " + error.code + " " + error.message);
             }
-            window.localStorage['module'] = JSON.stringify($scope.modules);
-            console.log($scope.modules);
-          },
-          error: function(error) {
-            console.log("Error: " + error.code + " " + error.message);
-          }
-        });
-      },
-      error: function(error) {
-        console.log("Error: " + error.code + " " + error.message);
+          });
+        },
+        error: function(error) {
+          console.log("Error: " + error.code + " " + error.message);
+        }
+      });
+      if ($localstorage.getObject('module')) {
+        $scope.modules = $localstorage.getObject('module');
       }
-    });
-    if (window.localStorage['module']) {
-      $scope.modules = JSON.parse(window.localStorage['module']);
-    }
+    };
 
+    $scope.doRefresh = function() {
+      $scope.getClass();
+      $scope.$broadcast('scroll.refreshComplete');
+    };
   })
 
 .controller('register_moduleCtrl', function($scope, $ionicModal, $ionicHistory, $ionicPopup, modules, $localstorage) {
@@ -200,11 +206,10 @@ angular.module('app.controllers', ['app.login',
         query.equalTo("name", $scope.selectedModule.name);
         query.first({
           success: function(Result) {
-            if(Result) {
+            if (Result) {
               Result.save(null, {
                 success: function(result) {
-                  result.addUnique("attendance",
-                  {
+                  result.addUnique("attendance", {
                     name: (Parse.User.current()).get('username'),
                     confirm: "",
                   });
@@ -212,8 +217,7 @@ angular.module('app.controllers', ['app.login',
                   $scope.attend = true;
                 }
               });
-            }
-            else {
+            } else {
               var moduleInstance = new ModuleInstance();
               moduleInstance.save({
                 code: ($scope.selectedModule.code).toUpperCase(),
