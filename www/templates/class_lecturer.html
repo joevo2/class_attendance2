@@ -5,12 +5,12 @@
             <ion-item class="item-text-wrap">
               <h4>{{selectedModule.code}}</h4>
               <h2>{{selectedModule.name}}</h2>
-              <p>9:00am - 11:00am</p>
+              <p ng-repeat="week in selectedModule.availability.week">{{week.name}}: {{(week.start).substring(11,16)}} - {{(week.end).substring(11,16)}} </p>
             </ion-item>
             <div class="item item-divider">Student List</div>
             <button class="button button-full button-stable" ng-click="refreshClass()">Refresh</button>
             <ion-list>
-              <ion-checkbox ng-repeat="student in students">{{student.name}}</ion-checkbox>
+              <ion-checkbox ng-repeat="student in students" ng-model="student.confirm">{{student.name}}</ion-checkbox>
             </ion-list>
         </div>
         <button class="button button-full button-assertive" ng-click="finishClass()">Finish Class</button>
