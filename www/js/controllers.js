@@ -226,10 +226,14 @@ angular.module('app.controllers', ['app.login',
           }
           Result.save(null, {
             success: function(result) {
-              result.addUnique("attendance", {
-                name: (Parse.User.current()).get('firstName') + " " + (Parse.User.current()).get('lastName'),
-                confirm: "",
-              });
+              if (type === 'end') {
+                console.log($scope.students);
+                result.set("attendance", $scope.students);
+              } else {
+                result.addUnique("attendance", {
+                  name: (Parse.User.current()).get('firstName') + " " + (Parse.User.current()).get('lastName'),
+                });
+              }
               result.save();
               $scope.attend = true;
             }
@@ -249,7 +253,6 @@ angular.module('app.controllers', ['app.login',
             date: ((new Date()).toDateString()),
             attendance: [{
               name: name,
-              confirm: "",
             }],
           }, {
             success: function(courses) {
@@ -259,7 +262,6 @@ angular.module('app.controllers', ['app.login',
               console.log("Failed " + error.message);
             }
           });
-          $ionicHistory.goBack();
           $scope.attend = true;
         }
       }
@@ -293,7 +295,9 @@ angular.module('app.controllers', ['app.login',
 
     confirmPopup.then(function(res) {
       if (res) {
-        $scope.getModuleInstance('lecturer');
+        console.log('Ending class');
+        console.log($scope.students);
+        $scope.getModuleInstance('end');
       } else {
         console.log("cancelled");
       }
