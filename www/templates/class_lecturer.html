@@ -2,17 +2,15 @@
     <ion-content padding="true" class="has-header">
         <div class="list">
             <div class="item item-divider">Class details</div>
-            <ion-item class="item-text-wrap" href="#/class">
-              <h4>MOD001</h4>
-              <h2>Introduction to computing</h2>
+            <ion-item class="item-text-wrap">
+              <h4>{{selectedModule.code}}</h4>
+              <h2>{{selectedModule.name}}</h2>
               <p>9:00am - 11:00am</p>
             </ion-item>
-{{class}}
             <div class="item item-divider">Student List</div>
+            <button class="button button-full button-stable" ng-click="refreshClass()">Refresh</button>
             <ion-list>
-              <ion-checkbox ng-model="students['name']">Joel Yek</ion-checkbox>
-              <ion-checkbox>Lim Meng Hong</ion-checkbox>
-              <ion-checkbox>Allison Tu</ion-checkbox>
+              <ion-checkbox ng-repeat="student in students">{{student.name}}</ion-checkbox>
             </ion-list>
         </div>
         <button class="button button-full button-assertive" ng-click="finishClass()">Finish Class</button>

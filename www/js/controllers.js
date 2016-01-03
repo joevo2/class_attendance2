@@ -110,10 +110,21 @@ angular.module('app.controllers', ['app.login',
   })
 
 .controller('register_moduleCtrl', function($scope, $ionicModal, $ionicHistory, $ionicPopup, modules, $localstorage) {
+  // Get module information from service.js which fetch the data from
+  // Parse and then store into localstorage object
   modules.get();
   if ($localstorage.getObject('courses')) {
     $scope.modules = $localstorage.getObject('modules');
   }
+  // Pull to refresh
+  $scope.doRefresh = function() {
+    // Get modules in services.js
+    modules.get();
+    if ($localstorage.getObject('courses')) {
+      $scope.modules = $localstorage.getObject('modules');
+    }
+    $scope.$broadcast('scroll.refreshComplete');
+  };
 
   $ionicModal.fromTemplateUrl('confirm_module.html', {
     scope: $scope,
@@ -192,6 +203,69 @@ angular.module('app.controllers', ['app.login',
 
 .controller('classCtrl', function($scope, $ionicPopup, $ionicHistory, $localstorage) {
   $scope.selectedModule = $localstorage.getObject('selectedModule');
+
+  // get localstorage object of student attendance
+  if ($localstorage.getObject('attendance')) {
+    $scope.students = $localstorage.getObject('attendance');
+  }
+  $scope.getModuleInstance = function(type) {
+    var ModuleInstance = Parse.Object.extend("ModuleInstance");
+    var query = new Parse.Query(ModuleInstance);
+    query.equalTo("date", ((new Date()).toDateString()));
+    query.equalTo("name", $scope.selectedModule.name);
+    query.first({
+      success: function(Result) {
+        if (Result) {
+          // if this function is called by a lecturer
+          // it will save the attendance student object
+          if (type === 'lecturer') {
+            $scope.students = Result.get('attendance');
+            console.log(Result.get('attendance'));
+            $localstorage.setObject('attendance', $scope.students);
+            return;
+          }
+          Result.save(null, {
+            success: function(result) {
+              result.addUnique("attendance", {
+                name: (Parse.User.current()).get('firstName') + " " + (Parse.User.current()).get('lastName'),
+                confirm: "",
+              });
+              result.save();
+              $scope.attend = true;
+            }
+          });
+        } else {
+          var name;
+          if (type === 'lecturer') {
+            name = "";
+          } else {
+            name = (Parse.User.current()).get('firstName') + " " + (Parse.User.current()).get('lastName');
+          }
+          var moduleInstance = new ModuleInstance();
+          moduleInstance.save({
+            code: ($scope.selectedModule.code).toUpperCase(),
+            name: $scope.selectedModule.name,
+            lecturer: $scope.selectedModule.lecturer,
+            date: ((new Date()).toDateString()),
+            attendance: [{
+              name: name,
+              confirm: "",
+            }],
+          }, {
+            success: function(courses) {
+              console.log("Saved");
+            },
+            error: function(courses, error) {
+              console.log("Failed " + error.message);
+            }
+          });
+          $ionicHistory.goBack();
+          $scope.attend = true;
+        }
+      }
+    });
+  };
+
   $scope.attendClass = function() {
     console.log(((new Date()).toDateString()));
     var confirmPopup = $ionicPopup.confirm({
@@ -200,51 +274,15 @@ angular.module('app.controllers', ['app.login',
     });
     confirmPopup.then(function(res) {
       if (res) {
-        var ModuleInstance = Parse.Object.extend("ModuleInstance");
-        var query = new Parse.Query(ModuleInstance);
-        query.equalTo("date", ((new Date()).toDateString()));
-        query.equalTo("name", $scope.selectedModule.name);
-        query.first({
-          success: function(Result) {
-            if (Result) {
-              Result.save(null, {
-                success: function(result) {
-                  result.addUnique("attendance", {
-                    name: (Parse.User.current()).get('username'),
-                    confirm: "",
-                  });
-                  result.save();
-                  $scope.attend = true;
-                }
-              });
-            } else {
-              var moduleInstance = new ModuleInstance();
-              moduleInstance.save({
-                code: ($scope.selectedModule.code).toUpperCase(),
-                name: $scope.selectedModule.name,
-                lecturer: $scope.selectedModule.lecturer,
-                date: ((new Date()).toDateString()),
-                attendance: [{
-                  name: (Parse.User.current()).get('username'),
-                  confirm: "",
-                }],
-              }, {
-                success: function(courses) {
-                  console.log("Saved");
-                },
-                error: function(courses, error) {
-                  console.log("Failed " + error.message);
-                }
-              });
-              $ionicHistory.goBack();
-              $scope.attend = true;
-            }
-          }
-        });
+        $scope.getModuleInstance();
       } else {
         console.log('You are not sure');
       }
     });
+  };
+
+  $scope.refreshClass = function() {
+    $scope.getModuleInstance('lecturer');
   };
 
   $scope.finishClass = function() {
@@ -255,7 +293,7 @@ angular.module('app.controllers', ['app.login',
 
     confirmPopup.then(function(res) {
       if (res) {
-
+        $scope.getModuleInstance('lecturer');
       } else {
         console.log("cancelled");
       }
