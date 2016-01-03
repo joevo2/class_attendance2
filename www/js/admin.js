@@ -1,7 +1,5 @@
 angular.module('app.admin', [])
 .controller('adminCtrl', function($scope, $state, $ionicPopover, $ionicHistory, courses, modules, $localstorage, $window) {
-
-
   // Get courses services in service.js
   // Where it will fetch the data from parse and save into
   // a localstorage object.
@@ -15,6 +13,19 @@ angular.module('app.admin', [])
   if ($localstorage.getObject('courses')) {
     $scope.modules = $localstorage.getObject('modules');
   }
+
+  $scope.doRefresh = function() {
+    courses.get();
+    if ($localstorage.getObject('courses')) {
+      $scope.courses = $localstorage.getObject('courses');
+    }
+    // Get modules in services.js
+    modules.get();
+    if ($localstorage.getObject('courses')) {
+      $scope.modules = $localstorage.getObject('modules');
+    }
+    $scope.$broadcast('scroll.refreshComplete');
+  };
 
   // Ionic popover
   $ionicPopover.fromTemplateUrl('admin-menu.html', {

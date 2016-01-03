@@ -59,13 +59,19 @@ angular.module('app.controllers', ['app.login',
         // queryX = new Parse.Query(Modules);
         // queryX.equalTo("objectId", $scope.modulesCode[0]);
 
-        var lotsOfWins = new Parse.Query("Modules");
-        lotsOfWins.equalTo("objectId", $scope.modulesCode[0]);
+        var a = new Parse.Query("Modules");
+        a.equalTo("objectId", $scope.modulesCode[0]);
 
-        var fewWins = new Parse.Query("Modules");
-        fewWins.equalTo("objectId", $scope.modulesCode[1]);
+        var b = new Parse.Query("Modules");
+        b.equalTo("objectId", $scope.modulesCode[1]);
 
-        var mainQuery = Parse.Query.or(lotsOfWins, fewWins);
+        var c = new Parse.Query("Modules");
+        c.equalTo("objectId", $scope.modulesCode[2]);
+
+        var d = new Parse.Query("Modules");
+        d.equalTo("objectId", $scope.modulesCode[3]);
+
+        var mainQuery = Parse.Query.or(a, b, c, d);
         mainQuery.find({
           success: function(results) {
             for (var i = 0; i < results.length; i++) {
