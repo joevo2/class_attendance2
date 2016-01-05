@@ -26,10 +26,10 @@ angular.module('app.add_module', [])
   $scope.addModule = function() {
     console.log($scope.module);
     console.log($scope.week);
-    var Modules = Parse.Object.extend("Modules");
-    var qmodule = new Modules();
+    var Modules = Parse.Object.extend("Modules");   // Create a class/table in parse named 'Modules'
+    var qmodule = new Modules();                    // Create an instance of it
 
-    qmodule.save({
+    qmodule.save({                                  // Save the object in parse
       code: ($scope.module.code).toUpperCase(),
       name: $scope.module.name,
       prerequisite: $scope.module.prerequisite,
@@ -48,6 +48,6 @@ angular.module('app.add_module', [])
         console.log("Failed " + error.message);
       }
     });
-    $ionicHistory.goBack();
+    $ionicHistory.goBack();                       // Go back one page
   };
 });

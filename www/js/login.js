@@ -6,11 +6,10 @@ angular.module('app.login', [])
       console.log($scope.login);
       Parse.User.logIn($scope.login.username, $scope.login.password, {
         success: function(user) {
-          $ionicHistory.nextViewOptions({
+          $ionicHistory.nextViewOptions({             // disable the back button in navigation bar
             disableBack: true
           });
           if (user.get('accountType') === 'Admin') {
-            $localstorage.set('admin', true);
             $state.go('admin');
           }
           else {

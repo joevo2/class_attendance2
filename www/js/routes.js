@@ -3,12 +3,12 @@ angular.module('app.routes', [])
     // Parse Initilise  with API key
     Parse.initialize("4nqAmOf9scv9vWFCdeZkNMH0yHSXAAmb3Pnf5mk9", "b2wahr5y1nRpV4vlB3mLWBNTtKVBriHiq3Ao3LZg");
 
-    var path = '/login';
-    if (Parse.User.current()) {
-      path = '/home';
+    var path = '/login';                          // default path
+    if (Parse.User.current()) {                   // If parse user exisit = if user is logged in
+      path = '/home';                             // set the path to home
       var user = Parse.User.current();
-      if (user.get("accountType") == "Admin") {
-        path = '/admin';
+      if (user.get("accountType") == "Admin") {   // if the user accont type is Admin
+        path = '/admin';                          // set the path to admin
       }
     }
 

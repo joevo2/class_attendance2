@@ -34,24 +34,27 @@ angular.module('app.controllers', ['app.login',
 
     // Logout
     $scope.logout = function() {
-      Parse.User.logOut();
-      $ionicHistory.nextViewOptions({
+      Parse.User.logOut();            //Parse user logout function
+      $ionicHistory.nextViewOptions({ //Disabled the back button in the navigation top bar
         disableBack: true
       });
-      $state.go('login');
-      $scope.closePopover();
-      localStorage.clear();
+      $state.go('login');             // go to the login page
+      $scope.closePopover();          // close the ionic popover
+      localStorage.clear();           // clear all the localstorage
     };
     $scope.goto = function(page) {
       $state.go(page);
     };
 
-    // Student attended class
+    // Student's enrolled class
     $scope.getClass = function() {
       $scope.modules = [];
+      // Asscociate with the class named as Student Details in parse
       var StudentModule = Parse.Object.extend("StudentDetails");
       var query = new Parse.Query(StudentModule);
+      // Set the query equalTo
       query.equalTo("parent", (Parse.User.current()).id);
+      // Get only the first result
       query.first({
         success: function(results) {
           var object = results;
@@ -73,7 +76,9 @@ angular.module('app.controllers', ['app.login',
           var d = new Parse.Query("Modules");
           d.equalTo("objectId", $scope.modulesCode[3]);
 
+          // An 'or' query for 4 different value
           var mainQuery = Parse.Query.or(a, b, c, d);
+          // Find all the result that satisfied the query contraints
           mainQuery.find({
             success: function(results) {
               for (var i = 0; i < results.length; i++) {
@@ -87,6 +92,7 @@ angular.module('app.controllers', ['app.login',
                   availability: results[i].get('availability'),
                 };
               }
+              // Store it as a localstorage for offline access
               $localstorage.setObject('module', $scope.modules);
               console.log($scope.modules);
             },
@@ -154,8 +160,9 @@ angular.module('app.controllers', ['app.login',
   });
   console.log($scope.selected);
 
+  // Enrol in modules
   $scope.confirmModule = function() {
-    //confirm
+    // ionic confirm pop up
     var confirmPopup = $ionicPopup.confirm({
       title: 'Confirmation',
       template: 'Are you sure you want to enroll in this module?'
@@ -173,6 +180,7 @@ angular.module('app.controllers', ['app.login',
             if (Result) {
               Result.save(null, {
                 success: function(result) {
+                  // Add an unqiue array to the array object fetched from parse
                   result.addUnique("modules", $scope.selected.id);
                   result.save();
                 }
@@ -209,6 +217,8 @@ angular.module('app.controllers', ['app.login',
   if ($localstorage.getObject('attendance')) {
     $scope.students = $localstorage.getObject('attendance');
   }
+
+  // Get or create the module instances (classes instances)
   $scope.getModuleInstance = function(type) {
     var ModuleInstance = Parse.Object.extend("ModuleInstance");
     var query = new Parse.Query(ModuleInstance);
@@ -216,6 +226,7 @@ angular.module('app.controllers', ['app.login',
     query.equalTo("name", $scope.selectedModule.name);
     query.first({
       success: function(Result) {
+        // if the module instance already created
         if (Result) {
           // if this function is called by a lecturer
           // it will save the attendance student object
@@ -231,6 +242,7 @@ angular.module('app.controllers', ['app.login',
                 console.log($scope.students);
                 result.set("attendance", $scope.students);
               } else {
+                // save student attendance in the module instance
                 result.addUnique("attendance", {
                   name: (Parse.User.current()).get('firstName') + " " + (Parse.User.current()).get('lastName'),
                 });
@@ -239,7 +251,7 @@ angular.module('app.controllers', ['app.login',
               $scope.attend = true;
             }
           });
-        } else {
+        } else {  // if module instance is not created, create it
           var name;
           if (type === 'lecturer') {
             name = null;
@@ -269,6 +281,7 @@ angular.module('app.controllers', ['app.login',
     });
   };
 
+  // confirm attendance
   $scope.attendClass = function() {
     console.log(((new Date()).toDateString()));
     var confirmPopup = $ionicPopup.confirm({
