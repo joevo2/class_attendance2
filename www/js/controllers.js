@@ -210,7 +210,7 @@ angular.module('app.controllers', ['app.login',
 
 })
 
-.controller('classCtrl', function($scope, $ionicPopup, $ionicHistory, $localstorage) {
+.controller('classCtrl', function($scope, $ionicPopup, $ionicHistory, $localstorage, $cordovaBeacon, $ionicPlatform) {
   $scope.selectedModule = $localstorage.getObject('selectedModule');
 
   // get localstorage object of student attendance
@@ -319,4 +319,68 @@ angular.module('app.controllers', ['app.login',
       }
     });
   };
+
+
+  // Beacon
+  var brIdentifier = 'Bean Beacon';
+  var brUuid = 'A495DEAD-C5B1-4B44-B512-1370F02D74DE';
+  var brMajor = 48879;
+  var brMinor = 51966;
+  var brNotifyEntryStateOnDisplay = true;
+
+  //$ionicPlatform.ready(function () {
+    // $scope.didStartMonitoringForRegionLog = 'Test';
+    // $scope.didDetermineStateForRegionLog = '';
+    // $scope.didRangeBeaconsInRegionLog = '';
+    //
+    // $scope.requestAlwaysAuthorization = function() {
+    //   $cordovaBeacon.requestAlwaysAuthorization();
+    // };
+    //
+    // $scope.startMonitoringForRegion = function() {
+    //   $cordovaBeacon.startMonitoringForRegion($cordovaBeacon.createBeaconRegion(
+    //     brIdentifier, brUuid, brMajor, brMinor, brNotifyEntryStateOnDisplay
+    //   ));
+    // };
+    // $scope.startRangingBeaconsInRegion = function() {
+    //   $cordovaBeacon.startRangingBeaconsInRegion($cordovaBeacon.createBeaconRegion(
+    //     brIdentifier, brUuid, brMajor, brMinor, brNotifyEntryStateOnDisplay
+    //   ));
+    // };
+    //
+    // $scope.stopMonitoringForRegion = function() {
+    //   $cordovaBeacon.stopMonitoringForRegion($cordovaBeacon.createBeaconRegion(
+    //     brIdentifier, brUuid, brMajor, brMinor, brNotifyEntryStateOnDisplay
+    //   ));
+    // };
+    // $scope.stopRangingBeaconsInRegion = function() {
+    //   $cordovaBeacon.stopRangingBeaconsInRegion($cordovaBeacon.createBeaconRegion(
+    //     brIdentifier, brUuid, brMajor, brMinor, brNotifyEntryStateOnDisplay
+    //   ));
+    // };
+    //
+    // $scope.clearLogs = function() {
+    //   $scope.didStartMonitoringForRegionLog = '';
+    //   $scope.didDetermineStateForRegionLog = '';
+    //   $scope.didRangeBeaconsInRegionLog = '';
+    // };
+    //
+    //
+    // $rootScope.$on("$cordovaBeacon:didStartMonitoringForRegion", function (event, pluginResult) {
+    //   $scope.didStartMonitoringForRegionLog += '-----' + '\n';
+    //   $scope.didStartMonitoringForRegionLog += JSON.stringify(pluginResult) + '\n';
+    // });
+    //
+    // $rootScope.$on("$cordovaBeacon:didDetermineStateForRegion", function (event, pluginResult) {
+    //   $scope.didDetermineStateForRegionLog += '-----' + '\n';
+    //   $scope.didDetermineStateForRegionLog += JSON.stringify(pluginResult) + '\n';
+    // });
+    //
+    // $rootScope.$on("$cordovaBeacon:didRangeBeaconsInRegion", function (event, pluginResult) {
+    //   $scope.didRangeBeaconsInRegionLog += '-----' + '\n';
+    //   $scope.didRangeBeaconsInRegionLog += JSON.stringify(pluginResult) + '\n';
+    // });
+
+  //});
+
 });
