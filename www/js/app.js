@@ -6,7 +6,8 @@ angular.module('app',
   'app.directives',
   'validation.match',
   'ti-segmented-control',
-  'ng-mfb'])
+  'ng-mfb',
+  'ngCordova'])
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
     if(window.cordova && window.cordova.plugins.Keyboard) {
