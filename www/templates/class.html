@@ -1,21 +1,42 @@
 <ion-view title="Module">
-    <ion-content padding="true" class="has-header">
-        <div class="list">
-            <div class="item item-divider">Module details</div>
-            <ion-item class="item-text-wrap">
-              <h4>{{selectedModule.code}}</h4>
-              <h2>{{selectedModule.name}}</h2>
-              <p ng-repeat="week in selectedModule.availability.week">{{week.name}}: {{(week.start).substring(11,16)}} - {{(week.end).substring(11,16)}} </p>
-            </ion-item>
-            <div class="item item-divider">Lecturer</div>
-            <div class="item item-body">{{selectedModule.lecturer}}</div>
-
-            <!-- <div class="item item-divider">Notes</div>
+  <ion-content padding="true" class="has-header">
+    <div class="list">
+      <div class="item item-divider">Module details</div>
+      <ion-item class="item-text-wrap">
+        <h4>{{selectedModule.code}}</h4>
+        <h2>{{selectedModule.name}}</h2>
+        <p ng-repeat="week in selectedModule.availability.week">{{week.name}}: {{(week.start).substring(11,16)}} - {{(week.end).substring(11,16)}} </p>
+      </ion-item>
+      <div class="item item-divider">Lecturer</div>
+      <div class="item item-body">{{selectedModule.lecturer}}</div>
+      <!-- <div class="item item-divider">Notes</div>
             <div class="item item-body"></div> -->
+    </div>
+    <button class="button button-full button-assertive" ng-click="attendClass()" ng-class="{disabled: beaconStatus!='ProximityNear' && beaconStatus!='ProximityImmediate'}">Attend</button>
+    {{beaconStatus}}
+    
+    <!-- Beacon Debug -->
+    <!--<div class="list">
+      <div class="item" ng-repeat="(key, value) in beacons">
+        <div class="row">
+          <div class="col truncate">
+            {{value.uuid}}
+          </div>
         </div>
-        <button class="button button-full button-assertive" ng-click="attendClass()" ng-class="{disabled: attend}">Attend</button>
-        {{didStartMonitoringForRegionLog}}
-        {{didDetermineStateForRegionLog}}
-        {{didRangeBeaconsInRegionLog}}
-    </ion-content>
+        <div class="row">
+          <div class="col">
+            major: {{value.major}}
+          </div>
+          <div class="col">
+            minor: {{value.minor}}
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            {{value.proximity}}
+          </div>
+        </div>
+      </div>
+    </div>-->
+  </ion-content>
 </ion-view>
