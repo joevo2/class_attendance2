@@ -269,6 +269,10 @@ angular.module('app.controllers', ['app.login',
               }
               result.save();
               $scope.attend = true;
+              $cordovaDialogs.alert('Attendance has been recorded', 'Confirmation', 'OK')
+              .then(function() {
+                // callback success
+              });
             }
           });
         } else { // if module instance is not created, create it
@@ -290,6 +294,10 @@ angular.module('app.controllers', ['app.login',
           }, {
             success: function(courses) {
               console.log("Saved");
+              $cordovaDialogs.alert('Attendance has been recorded', 'Confirmation', 'OK')
+              .then(function() {
+                // callback success
+              });
             },
             error: function(courses, error) {
               console.log("Failed " + error.message);
