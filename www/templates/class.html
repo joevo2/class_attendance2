@@ -12,9 +12,12 @@
       <!-- <div class="item item-divider">Notes</div>
             <div class="item item-body"></div> -->
     </div>
-    <button class="button button-full button-assertive" ng-click="attendClass()" ng-class="{disabled: beaconStatus!='ProximityNear' && beaconStatus!='ProximityImmediate'}">Attend</button>    
+    <button class="button button-full button-assertive" ng-click="attendClass()" ng-class="{disabled: beaconStatus!='ProximityNear' && beaconStatus!='ProximityImmediate'}">Attend</button>
     <!-- Beacon Debug -->
-    <!--<div class="list">
+    <div class="list">
+      <div class="item item-divider">
+        <p>Debug</p>
+      </div>
       <div class="item" ng-repeat="(key, value) in beacons">
         <div class="row">
           <div class="col truncate">
@@ -33,8 +36,11 @@
           <div class="col">
             {{value.proximity}}
           </div>
+          <div class="col">
+            RSSI: {{value.rssi}}
+          </div>
         </div>
       </div>
-    </div>-->
+    </div>
   </ion-content>
 </ion-view>
